@@ -40,7 +40,7 @@ cd vulnerable-webapp-lab
 # Start the vulnerable application
 docker-compose up --build
 
-
+```
 📚 Learning Resources
 OWASP Top 10 2021
 OWASP Testing Guide
@@ -61,5 +61,6 @@ Flask framework developers
 Docker community
 
 ⚠️ Disclaimer: This application is for educational purposes only. The author is not responsible for any misuse of this software.
+
 
 
