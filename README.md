@@ -46,10 +46,12 @@ OWASP Top 10 2021
 OWASP Testing Guide
 PortSwigger Web Security Academy
 
-📄 License
+📄 License:
+
 Educational Use Only - Not for Production Deployment
 
-👤 Author
+👤 Author:
+
 Muhammad Rafay Aijaz
 
 GitHub: @RafayAijaz
@@ -57,7 +59,9 @@ GitHub: @RafayAijaz
 🙏 Acknowledgments
 
 OWASP Foundation for the Top 10 framework
+
 Flask framework developers
+
 Docker community
 
 ⚠️ Disclaimer: This application is for educational purposes only. The author is not responsible for any misuse of this software.
