@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile - Vulnerable Lab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>👤 User Profile</h1>
+        
+        <div class="profile-info">
+            <h2>{{ username }}</h2>
+            <p><strong>User ID:</strong> {{ user_id }}</p>
+            <p><strong>Email:</strong> {{ email }}</p>
+            <p><strong>Role:</strong> {{ "Administrator" if is_admin else "Regular User" }}</p>
+        </div>
+        
+        <div class="idor-test">
+            <h3>IDOR Vulnerability Test:</h3>
+            <p>Try accessing other user profiles by changing the user_id in URL:</p>
+            <ul>
+                <li><a href="/profile/1">/profile/1 (Admin)</a></li>
+                <li><a href="/profile/2">/profile/2 (Alice)</a></li>
+                <li><a href="/profile/3">/profile/3 (Bob)</a></li>
+                <li><a href="/profile/4">/profile/4 (Test User)</a></li>
+            </ul>
+            <p class="hint"><strong>Vulnerability:</strong> No authorization check - you can view any user's profile</p>
+        </div>
+        
+        <div class="session-info">
+            <h3>Session Information:</h3>
+            <p>Your session cookie is not HttpOnly and can be accessed via JavaScript if XSS is exploited.</p>
+            <button onclick="alert('Cookie: ' + document.cookie)">Show My Cookies</button>
+        </div>
+        
+        <p><a href="/">← Back to Home</a> | <a href="/logout">Logout</a></p>
+    </div>
+</body>
+</html>

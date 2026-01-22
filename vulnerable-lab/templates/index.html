@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vulnerable Lab - Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>🔓 Vulnerable Web Application Lab</h1>
+        <div class="subtitle">OWASP Top 10 Vulnerabilities for Learning & Testing</div>
+        
+        <nav>
+            <a href="/">Home</a> |
+            <a href="/search">Search (SQLi)</a> |
+            <a href="/upload">Upload</a> |
+            <a href="/ping">Ping (Cmd Injection)</a> |
+            {% if 'username' in session %}
+                <a href="/profile">Profile</a> |
+                <a href="/logout">Logout ({{ session.username }})</a>
+            {% else %}
+                <a href="/login">Login</a>
+            {% endif %}
+        </nav>
+        
+        <div class="content">
+            <h2>Welcome Security Researcher!</h2>
+            <p>This application contains <strong>intentional vulnerabilities</strong> for learning and practicing security testing.</p>
+            
+            <div class="warning-box">
+                <strong>⚠️ WARNING:</strong> This application is intentionally vulnerable. 
+                Do not deploy on public networks or with real data.
+            </div>
+            
+            <h3>Available Vulnerabilities:</h3>
+            <table class="vuln-table">
+                <tr>
+                    <th>Vulnerability</th>
+                    <th>OWASP Category</th>
+                    <th>Location</th>
+                    <th>Test Payload</th>
+                </tr>
+                <tr>
+                    <td>SQL Injection</td>
+                    <td>A03: Injection</td>
+                    <td>/search?q=</td>
+                    <td><code>' OR '1'='1</code></td>
+                </tr>
+                <tr>
+                    <td>Cross-Site Scripting (XSS)</td>
+                    <td>A03: Injection</td>
+                    <td>/comment (POST)</td>
+                    <td><code>&lt;script&gt;alert(1)&lt;/script&gt;</code></td>
+                </tr>
+                <tr>
+                    <td>Broken Authentication</td>
+                    <td>A07: Auth Failures</td>
+                    <td>/login</td>
+                    <td>Username: <code>' OR '1'='1'--</code></td>
+                </tr>
+                <tr>
+                    <td>IDOR</td>
+                    <td>A01: Broken Access Control</td>
+                    <td>/profile/&lt;id&gt;</td>
+                    <td>Try: <code>/profile/1</code></td>
+                </tr>
+                <tr>
+                    <td>Security Misconfiguration</td>
+                    <td>A05: Security Misconfig</td>
+                    <td>/admin?token=</td>
+                    <td>Token: <code>supersecrettoken123</code></td>
+                </tr>
+            </table>
+            
+            <h3>Test XSS Vulnerability:</h3>
+            <div class="test-box">
+                <form action="/comment" method="POST">
+                    <textarea name="comment" rows="3" cols="60" placeholder="Enter your comment here..."></textarea><br>
+                    <input type="submit" value="Submit Comment">
+                </form>
+                <p class="hint">Try: <code>&lt;script&gt;alert('XSS')&lt;/script&gt;</code></p>
+            </div>
+            
+            <h3>Quick Test Links:</h3>
+            <div class="quick-links">
+                <a href="/search?q=test" class="btn">Test Search</a>
+                <a href="/ping?host=127.0.0.1" class="btn">Test Ping</a>
+                <a href="/admin?token=supersecrettoken123" class="btn">Admin Panel</a>
+                <a href="/debug" class="btn">Debug Info</a>
+            </div>
+        </div>
+        
+        <footer>
+            <p>For educational purposes only | OWASP Top 10 Practice Lab</p>
+        </footer>
+    </div>
+</body>
+</html>

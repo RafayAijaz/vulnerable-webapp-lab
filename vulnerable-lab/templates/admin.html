@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel - Vulnerable Lab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>⚙️ Admin Panel</h1>
+        <div class="warning-box">
+            <strong>⚠️ Security Misconfiguration:</strong> This panel is accessible with a hardcoded token!
+        </div>
+        
+        <h2>All Users in Database</h2>
+        <table class="admin-table">
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Password Hash (MD5)</th>
+                <th>Email</th>
+                <th>Is Admin</th>
+            </tr>
+            {% for user in users %}
+            <tr>
+                <td>{{ user[0] }}</td>
+                <td>{{ user[1] }}</td>
+                <td><code>{{ user[2] }}</code></td>
+                <td>{{ user[3] }}</td>
+                <td>{{ "Yes" if user[4] else "No" }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        
+        <div class="security-issues">
+            <h3>Security Issues in This Page:</h3>
+            <ol>
+                <li>Hardcoded authentication token (<code>supersecrettoken123</code>)</li>
+                <li>Exposing password hashes</li>
+                <li>No proper authentication/authorization</li>
+                <li>Token passed in URL (visible in logs, browser history)</li>
+            </ol>
+        </div>
+        
+        <p><a href="/">← Back to Home</a></p>
+    </div>
+</body>
+</html>

