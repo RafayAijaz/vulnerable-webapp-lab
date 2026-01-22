@@ -39,3 +39,27 @@ cd vulnerable-webapp-lab
 
 # Start the vulnerable application
 docker-compose up --build
+
+
+📚 Learning Resources
+OWASP Top 10 2021
+OWASP Testing Guide
+PortSwigger Web Security Academy
+
+📄 License
+Educational Use Only - Not for Production Deployment
+
+👤 Author
+Muhammad Rafay Aijaz
+
+GitHub: @RafayAijaz
+
+🙏 Acknowledgments
+
+OWASP Foundation for the Top 10 framework
+Flask framework developers
+Docker community
+
+⚠️ Disclaimer: This application is for educational purposes only. The author is not responsible for any misuse of this software.
+
+
